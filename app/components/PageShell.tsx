@@ -41,7 +41,7 @@ export default function PageShell({
         {title}
       </h1>
 
-      <div style={{ width: wide ? '80%' : '100%', maxWidth: wide ? 'none' : '680px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5vh' }}>
+      <div style={{ width: '100%', maxWidth: wide ? 'none' : '680px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5vh' }}>
         {children}
       </div>
     </main>

@@ -22,10 +22,10 @@ export default function Slideshow({ images }: { images: string[] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [n]);
 
-  const arrowStyle: React.CSSProperties = {
+  const navButton: React.CSSProperties = {
     fontFamily: titleFont,
     fontWeight: 700,
-    fontSize: '28px',
+    fontSize: '24px',
     lineHeight: 1,
     color: '#161616',
     background: '#f1f0ee',
@@ -34,33 +34,19 @@ export default function Slideshow({ images }: { images: string[] }) {
     width: '52px',
     height: '52px',
     cursor: 'pointer',
-    flexShrink: 0,
     transition: 'opacity 0.15s ease',
   };
 
   return (
-    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2.5vh' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1.5vw', width: '100%', justifyContent: 'center' }}>
-        {n > 1 && (
-          <button
-            aria-label="Previous"
-            style={arrowStyle}
-            onClick={() => go(-1)}
-            onMouseEnter={e => (e.currentTarget.style.opacity = '0.6')}
-            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-          >
-            ‹
-          </button>
-        )}
-
+    <>
+      {/* ── Image (clickable) — matches dataviz1 formatting ── */}
+      <div className="viz-image-wrap" style={{ margin: '4vh auto 0', textAlign: 'center' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={images[i]}
           alt={`Slide ${i + 1}`}
           onClick={() => setLightboxOpen(true)}
           style={{
-            flex: 1,
-            minWidth: 0,
             width: '100%',
             height: 'auto',
             display: 'block',
@@ -72,38 +58,49 @@ export default function Slideshow({ images }: { images: string[] }) {
           onMouseEnter={e => (e.currentTarget.style.opacity = '0.88')}
           onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
         />
+      </div>
 
-        {n > 1 && (
+      {/* ── Slideshow controls (below image, so they don't shrink it) ── */}
+      {n > 1 && (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', marginTop: '3vh' }}>
+          <button
+            aria-label="Previous"
+            style={navButton}
+            onClick={() => go(-1)}
+            onMouseEnter={e => (e.currentTarget.style.opacity = '0.6')}
+            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+          >
+            ‹
+          </button>
+
+          <div style={{ display: 'flex', gap: '10px' }}>
+            {images.map((_, idx) => (
+              <button
+                key={idx}
+                aria-label={`Go to slide ${idx + 1}`}
+                onClick={() => setI(idx)}
+                style={{
+                  width: '10px',
+                  height: '10px',
+                  borderRadius: '50%',
+                  border: '1.5px solid rgba(22,22,22,0.5)',
+                  background: idx === i ? '#161616' : 'transparent',
+                  cursor: 'pointer',
+                  padding: 0,
+                }}
+              />
+            ))}
+          </div>
+
           <button
             aria-label="Next"
-            style={arrowStyle}
+            style={navButton}
             onClick={() => go(1)}
             onMouseEnter={e => (e.currentTarget.style.opacity = '0.6')}
             onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
           >
             ›
           </button>
-        )}
-      </div>
-
-      {n > 1 && (
-        <div style={{ display: 'flex', gap: '10px' }}>
-          {images.map((_, idx) => (
-            <button
-              key={idx}
-              aria-label={`Go to slide ${idx + 1}`}
-              onClick={() => setI(idx)}
-              style={{
-                width: '10px',
-                height: '10px',
-                borderRadius: '50%',
-                border: '1.5px solid rgba(22,22,22,0.5)',
-                background: idx === i ? '#161616' : 'transparent',
-                cursor: 'pointer',
-                padding: 0,
-              }}
-            />
-          ))}
         </div>
       )}
 
@@ -186,7 +183,12 @@ export default function Slideshow({ images }: { images: string[] }) {
           />
         </div>
       )}
-    </div>
+
+      <style>{`
+        .viz-image-wrap { width: 80%; }
+        @media (max-width: 768px) { .viz-image-wrap { width: 95%; } }
+      `}</style>
+    </>
   );
 }
 
