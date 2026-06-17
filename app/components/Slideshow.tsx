@@ -59,6 +59,8 @@ export default function Slideshow({ images }: { images: string[] }) {
           alt={`Slide ${i + 1}`}
           onClick={() => setLightboxOpen(true)}
           style={{
+            flex: 1,
+            minWidth: 0,
             width: '100%',
             height: 'auto',
             display: 'block',

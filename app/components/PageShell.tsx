@@ -7,10 +7,12 @@ const titleFont = "var(--font-supria), sans-serif";
 export default function PageShell({
   title,
   backHref = '/',
+  wide = false,
   children,
 }: {
   title: string;
   backHref?: string;
+  wide?: boolean;
   children: React.ReactNode;
 }) {
   return (
@@ -39,7 +41,7 @@ export default function PageShell({
         {title}
       </h1>
 
-      <div style={{ width: '100%', maxWidth: '680px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5vh' }}>
+      <div style={{ width: wide ? '80%' : '100%', maxWidth: wide ? 'none' : '680px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5vh' }}>
         {children}
       </div>
     </main>

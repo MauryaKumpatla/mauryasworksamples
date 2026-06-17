@@ -3,7 +3,7 @@ import Slideshow from '../../components/Slideshow';
 
 export default function AmrAgencyViz() {
   return (
-    <PageShell title="AMR Agency" backHref="/data-visualizations">
+    <PageShell title="AMR Agency" backHref="/data-visualizations" wide>
       <Slideshow images={['/Tobiason_Vis_1.png', '/TarrisDataVis2.png']} />
     </PageShell>
   );
