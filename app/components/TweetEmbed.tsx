@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from 'react';
+import { tweetId } from '../lib/tweets';
 
 declare global {
   interface Window {
@@ -32,12 +33,6 @@ function ensureScript(): Promise<void> {
       }
     }, 200);
   });
-}
-
-/** Extracts the numeric status id from an x.com / twitter.com URL. */
-function tweetId(url: string): string | null {
-  const m = url.match(/status\/(\d+)/);
-  return m ? m[1] : null;
 }
 
 export default function TweetEmbed({ url }: { url: string }) {
