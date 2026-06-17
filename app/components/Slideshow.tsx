@@ -22,25 +22,30 @@ export default function Slideshow({ images }: { images: string[] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [n]);
 
-  const navButton: React.CSSProperties = {
+  const sideArrow: React.CSSProperties = {
+    position: 'absolute',
+    top: '50%',
+    transform: 'translateY(-50%)',
     fontFamily: titleFont,
     fontWeight: 700,
-    fontSize: '24px',
+    fontSize: '26px',
     lineHeight: 1,
-    color: '#161616',
-    background: '#f1f0ee',
-    border: '1.5px solid rgba(22, 22, 22, 0.22)',
-    borderRadius: 0,
-    width: '52px',
-    height: '52px',
+    color: '#fff',
+    background: 'rgba(22, 22, 22, 0.55)',
+    border: '1px solid rgba(255,255,255,0.3)',
+    borderRadius: '4px',
+    width: '46px',
+    height: '60px',
     cursor: 'pointer',
+    opacity: 0.82,
     transition: 'opacity 0.15s ease',
+    zIndex: 2,
   };
 
   return (
     <>
-      {/* ── Image (clickable) — matches dataviz1 formatting ── */}
-      <div className="viz-image-wrap" style={{ margin: '4vh auto 0', textAlign: 'center' }}>
+      {/* ── Image (clickable) — matches dataviz1 formatting; arrows overlay the sides ── */}
+      <div className="viz-image-wrap" style={{ position: 'relative', margin: '4vh auto 0', textAlign: 'center' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={images[i]}
@@ -58,49 +63,50 @@ export default function Slideshow({ images }: { images: string[] }) {
           onMouseEnter={e => (e.currentTarget.style.opacity = '0.88')}
           onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
         />
+
+        {n > 1 && (
+          <>
+            <button
+              aria-label="Previous"
+              style={{ ...sideArrow, left: '12px' }}
+              onClick={() => go(-1)}
+              onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
+              onMouseLeave={e => (e.currentTarget.style.opacity = '0.82')}
+            >
+              ‹
+            </button>
+            <button
+              aria-label="Next"
+              style={{ ...sideArrow, right: '12px' }}
+              onClick={() => go(1)}
+              onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
+              onMouseLeave={e => (e.currentTarget.style.opacity = '0.82')}
+            >
+              ›
+            </button>
+          </>
+        )}
       </div>
 
-      {/* ── Slideshow controls (below image, so they don't shrink it) ── */}
+      {/* ── Dot indicators (below image) ── */}
       {n > 1 && (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', marginTop: '3vh' }}>
-          <button
-            aria-label="Previous"
-            style={navButton}
-            onClick={() => go(-1)}
-            onMouseEnter={e => (e.currentTarget.style.opacity = '0.6')}
-            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-          >
-            ‹
-          </button>
-
-          <div style={{ display: 'flex', gap: '10px' }}>
-            {images.map((_, idx) => (
-              <button
-                key={idx}
-                aria-label={`Go to slide ${idx + 1}`}
-                onClick={() => setI(idx)}
-                style={{
-                  width: '10px',
-                  height: '10px',
-                  borderRadius: '50%',
-                  border: '1.5px solid rgba(22,22,22,0.5)',
-                  background: idx === i ? '#161616' : 'transparent',
-                  cursor: 'pointer',
-                  padding: 0,
-                }}
-              />
-            ))}
-          </div>
-
-          <button
-            aria-label="Next"
-            style={navButton}
-            onClick={() => go(1)}
-            onMouseEnter={e => (e.currentTarget.style.opacity = '0.6')}
-            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-          >
-            ›
-          </button>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '3vh' }}>
+          {images.map((_, idx) => (
+            <button
+              key={idx}
+              aria-label={`Go to slide ${idx + 1}`}
+              onClick={() => setI(idx)}
+              style={{
+                width: '10px',
+                height: '10px',
+                borderRadius: '50%',
+                border: '1.5px solid rgba(22,22,22,0.5)',
+                background: idx === i ? '#161616' : 'transparent',
+                cursor: 'pointer',
+                padding: 0,
+              }}
+            />
+          ))}
         </div>
       )}
 
