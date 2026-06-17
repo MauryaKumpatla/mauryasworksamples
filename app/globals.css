@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f1f0ee;
+  background-image: url('/noise.png');
+  background-position: 0 0;
+  background-size: 300px;
+  background-attachment: fixed;
+  color: #161616;
+  min-height: 100vh;
+}
