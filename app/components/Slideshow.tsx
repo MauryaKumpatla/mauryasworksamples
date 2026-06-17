@@ -23,68 +23,67 @@ export default function Slideshow({ images }: { images: string[] }) {
   }, [n]);
 
   const sideArrow: React.CSSProperties = {
-    position: 'absolute',
-    top: '50%',
-    transform: 'translateY(-50%)',
+    flexShrink: 0,
     fontFamily: titleFont,
     fontWeight: 700,
     fontSize: '26px',
     lineHeight: 1,
-    color: '#fff',
-    background: 'rgba(22, 22, 22, 0.55)',
-    border: '1px solid rgba(255,255,255,0.3)',
-    borderRadius: '4px',
-    width: '46px',
+    color: '#161616',
+    background: '#f1f0ee',
+    border: '1.5px solid rgba(22, 22, 22, 0.22)',
+    borderRadius: 0,
+    width: '52px',
     height: '60px',
     cursor: 'pointer',
-    opacity: 0.82,
     transition: 'opacity 0.15s ease',
-    zIndex: 2,
   };
 
   return (
     <>
-      {/* ── Image (clickable) — matches dataviz1 formatting; arrows overlay the sides ── */}
-      <div className="viz-image-wrap" style={{ position: 'relative', margin: '4vh auto 0', textAlign: 'center' }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={images[i]}
-          alt={`Slide ${i + 1}`}
-          onClick={() => setLightboxOpen(true)}
-          style={{
-            width: '100%',
-            height: 'auto',
-            display: 'block',
-            outline: '1.5px solid rgba(22, 22, 22, 0.22)',
-            outlineOffset: '-1.5px',
-            cursor: 'zoom-in',
-            transition: 'opacity 0.15s ease',
-          }}
-          onMouseEnter={e => (e.currentTarget.style.opacity = '0.88')}
-          onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-        />
+      {/* ── Image (clickable) flanked by arrows OUTSIDE it, left and right ── */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5vw', margin: '4vh auto 0' }}>
+        {n > 1 && (
+          <button
+            aria-label="Previous"
+            style={sideArrow}
+            onClick={() => go(-1)}
+            onMouseEnter={e => (e.currentTarget.style.opacity = '0.6')}
+            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+          >
+            ‹
+          </button>
+        )}
+
+        <div className="viz-image-wrap" style={{ textAlign: 'center' }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={images[i]}
+            alt={`Slide ${i + 1}`}
+            onClick={() => setLightboxOpen(true)}
+            style={{
+              width: '100%',
+              height: 'auto',
+              display: 'block',
+              outline: '1.5px solid rgba(22, 22, 22, 0.22)',
+              outlineOffset: '-1.5px',
+              cursor: 'zoom-in',
+              transition: 'opacity 0.15s ease',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.opacity = '0.88')}
+            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+          />
+        </div>
 
         {n > 1 && (
-          <>
-            <button
-              aria-label="Previous"
-              style={{ ...sideArrow, left: '12px' }}
-              onClick={() => go(-1)}
-              onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
-              onMouseLeave={e => (e.currentTarget.style.opacity = '0.82')}
-            >
-              ‹
-            </button>
-            <button
-              aria-label="Next"
-              style={{ ...sideArrow, right: '12px' }}
-              onClick={() => go(1)}
-              onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
-              onMouseLeave={e => (e.currentTarget.style.opacity = '0.82')}
-            >
-              ›
-            </button>
-          </>
+          <button
+            aria-label="Next"
+            style={sideArrow}
+            onClick={() => go(1)}
+            onMouseEnter={e => (e.currentTarget.style.opacity = '0.6')}
+            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+          >
+            ›
+          </button>
         )}
       </div>
 
