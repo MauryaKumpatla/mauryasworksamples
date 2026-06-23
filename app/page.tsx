@@ -9,8 +9,8 @@ export default function Home() {
     { label: 'Player Analysis', href: '/player-analysis' },
     { label: 'Team Fit Analysis', href: '/team-fit-analysis' },
     { label: 'Data Visualizations', href: '/data-visualizations' },
-    { label: 'Informal Research & Development', href: '/research-development' },
     { label: 'Ad-Hoc Research & Development', href: '/ad-hoc-research' },
+    { label: 'Informal Research & Development', href: '/research-development' },
     { label: 'High School Substack (Grades 10-11)', href: 'https://theflarescreen.substack.com/', external: true },
   ];
 
