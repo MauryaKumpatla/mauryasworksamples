@@ -16,6 +16,10 @@ export default function TeamFitAnalysis() {
               label: 'Tarris Reed - Memphis',
               href: 'https://www.amragency.guide/tarrismemphiswriteup',
             },
+            {
+              label: 'Tarris Reed - San Antonio',
+              href: 'https://www.amragency.guide/tarrissanantoniowriteup',
+            },
           ],
         },
         {
