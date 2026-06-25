@@ -20,6 +20,10 @@ export default function TeamFitAnalysis() {
               label: 'Tarris Reed - San Antonio',
               href: 'https://www.amragency.guide/tarrissanantoniowriteup',
             },
+            {
+              label: 'Tarris Reed - Toronto',
+              href: 'https://www.amragency.guide/tarristorontowriteup',
+            },
           ],
         },
         {
