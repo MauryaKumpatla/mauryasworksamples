@@ -154,6 +154,7 @@ export default function Slideshow({ images }: { images: string[] }) {
               <button
                 aria-label="Previous"
                 onClick={e => { e.stopPropagation(); go(-1); }}
+                className="lightbox-arrow"
                 style={{ ...lightboxArrow, left: '2vw' }}
                 onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.2)')}
                 onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.1)')}
@@ -163,6 +164,7 @@ export default function Slideshow({ images }: { images: string[] }) {
               <button
                 aria-label="Next"
                 onClick={e => { e.stopPropagation(); go(1); }}
+                className="lightbox-arrow"
                 style={{ ...lightboxArrow, right: '2vw' }}
                 onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.2)')}
                 onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.1)')}
@@ -191,7 +193,10 @@ export default function Slideshow({ images }: { images: string[] }) {
 
       <style>{`
         .viz-image-wrap { width: 80%; }
-        @media (max-width: 768px) { .viz-image-wrap { width: 95%; } }
+        @media (max-width: 768px) {
+          .viz-image-wrap { width: 95%; }
+          .lightbox-arrow { display: none; }
+        }
       `}</style>
     </>
   );
