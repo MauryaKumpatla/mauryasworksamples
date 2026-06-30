@@ -7,7 +7,7 @@ export type Section = { heading: string; boxes: LinkBox[] };
 
 const titleFont = "var(--font-supria), sans-serif";
 
-export default function AnalysisPage({ title, sections }: { title: string; sections: Section[] }) {
+export default function AnalysisPage({ title, sections, backHref = '/' }: { title: string; sections: Section[]; backHref?: string }) {
   return (
     <main style={{
       minHeight: '100vh',
@@ -21,7 +21,7 @@ export default function AnalysisPage({ title, sections }: { title: string; secti
       padding: '8vh 6vw',
     }}>
       <Link
-        href="/"
+        href={backHref}
         style={{
           fontFamily: titleFont,
           fontWeight: 500,

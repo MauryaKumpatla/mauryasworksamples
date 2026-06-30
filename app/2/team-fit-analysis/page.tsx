@@ -4,6 +4,7 @@ export default function TeamFitAnalysis2() {
   return (
     <AnalysisPage
       title="Team Fit Analysis"
+      backHref="/2"
       sections={[
         {
           heading: 'AMR Agency',

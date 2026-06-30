@@ -6,7 +6,7 @@ export default function Home2() {
   const titleFont = "var(--font-supria), sans-serif";
 
   const buttons: { label: string; href?: string; external?: boolean }[] = [
-    { label: 'Player Analysis', href: '/player-analysis' },
+    { label: 'Player Analysis', href: '/2/player-analysis' },
     { label: 'Team Fit Analysis', href: '/2/team-fit-analysis' },
     { label: 'Data Visualizations', href: '/data-visualizations' },
     { label: 'Ad-Hoc Research & Development', href: '/ad-hoc-research' },

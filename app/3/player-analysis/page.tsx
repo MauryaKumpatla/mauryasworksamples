@@ -4,6 +4,7 @@ export default function PlayerAnalysis3() {
   return (
     <AnalysisPage
       title="Player Analysis"
+      backHref="/3"
       sections={[
         {
           heading: 'AMR Agency',
