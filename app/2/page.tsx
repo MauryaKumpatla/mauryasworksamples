@@ -8,9 +8,9 @@ export default function Home2() {
   const buttons: { label: string; href?: string; external?: boolean }[] = [
     { label: 'Player Analysis', href: '/2/player-analysis' },
     { label: 'Team Fit Analysis', href: '/2/team-fit-analysis' },
-    { label: 'Data Visualizations', href: '/data-visualizations' },
-    { label: 'Ad-Hoc Research & Development', href: '/ad-hoc-research' },
-    { label: 'Informal Research & Development', href: '/research-development' },
+    { label: 'Data Visualizations', href: '/2/data-visualizations' },
+    { label: 'Ad-Hoc Research & Development', href: '/2/ad-hoc-research' },
+    { label: 'Informal Research & Development', href: '/2/research-development' },
   ];
 
   const buttonStyle: React.CSSProperties = {
