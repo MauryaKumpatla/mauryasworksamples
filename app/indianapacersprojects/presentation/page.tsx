@@ -32,7 +32,7 @@ export default function PacersPresentation() {
           color: '#161616',
           margin: 0,
         }}>
-          Project #1: Presentation
+          Assignment #1: Presentation
         </h1>
       </div>
 

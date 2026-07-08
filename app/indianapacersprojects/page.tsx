@@ -6,9 +6,9 @@ export default function IndianaPacersProjects() {
   const titleFont = "var(--font-supria), sans-serif";
 
   const buttons: { label: string; href?: string; external?: boolean }[] = [
-    { label: 'Project #1: Presentation', href: '/indianapacersprojects/presentation' },
-    { label: 'Project #2: Four Factors Visualizations', href: '/indianapacersprojects/four-factors' },
-    { label: 'Project #3: Mock SQL Queries', href: '/indianapacersprojects/sql-queries' },
+    { label: 'Assignment #1: Presentation', href: '/indianapacersprojects/presentation' },
+    { label: 'Assignment #2: Four Factors Visualizations', href: '/indianapacersprojects/four-factors' },
+    { label: 'Assignment #3: Mock SQL Queries', href: '/indianapacersprojects/sql-queries' },
   ];
 
   const buttonStyle: React.CSSProperties = {
@@ -52,7 +52,7 @@ export default function IndianaPacersProjects() {
         color: '#161616',
         margin: '0 0 5vh',
       }}>
-        Indiana Pacers: Intern Projects
+        Indiana Pacers: Intern Assignments
       </h1>
 
       <div style={{
