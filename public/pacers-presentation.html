@@ -195,145 +195,27 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 <script>
 (function() {
-  // Only run on mobile (touch) devices
   if (!('ontouchstart' in window)) return;
 
-  var isPortrait = function() { return window.innerHeight > window.innerWidth; };
-  var isLandscape = function() { return window.innerWidth >= window.innerHeight; };
-
-  // --- Shared: block all slide-advancing clicks/touches on mobile ---
-  // The deck-stage advances slides on click. We block pointer/touch events
-  // on the slide stage itself, but allow them through on viz-hotspots and
-  // overlays so hyperlinks still work.
-  function blockNativeNav() {
-    document.addEventListener('click', function(e) {
-      // Allow clicks on hotspots and overlay elements
-      if (e.target.closest('.viz-hotspot') || e.target.closest('.viz-overlay')) return;
-      // Block clicks on the deck stage (which would advance slides)
-      var stage = e.target.closest('.deck-stage, [data-dc-root], x-import, section');
-      if (stage) e.stopImmediatePropagation();
-    }, true);
-
-    document.addEventListener('touchend', function(e) {
-      if (e.target.closest('.viz-hotspot') || e.target.closest('.viz-overlay')) return;
-      var stage = e.target.closest('.deck-stage, [data-dc-root], x-import, section');
-      if (stage) e.stopImmediatePropagation();
-    }, true);
-  }
-
-  // --- Portrait: inject prev/next arrow buttons ---
-  function injectPortraitArrows() {
-    if (document.getElementById('mob-prev')) return;
-
-    var btnStyle = [
-      'position:fixed',
-      'z-index:9999',
-      'left:50%',
-      'transform:translateX(-50%)',
-      'background:rgba(0,0,0,0.55)',
-      'border:1px solid rgba(255,255,255,0.3)',
-      'color:#fff',
-      'font-size:28px',
-      'line-height:1',
-      'width:64px',
-      'height:64px',
-      'border-radius:50%',
-      'cursor:pointer',
-      'display:flex',
-      'align-items:center',
-      'justify-content:center',
-      'touch-action:manipulation',
-      '-webkit-tap-highlight-color:transparent',
-    ].join(';');
-
-    var prev = document.createElement('button');
-    prev.id = 'mob-prev';
-    prev.innerHTML = '&#8592;';
-    prev.setAttribute('style', btnStyle + ';top:10px');
-
-    var next = document.createElement('button');
-    next.id = 'mob-next';
-    next.innerHTML = '&#8594;';
-    next.setAttribute('style', btnStyle + ';bottom:10px');
-
-    function clickStageAt(x, y) {
-      // Find the deck stage element and dispatch a click at the given
-      // normalised position within it so the deck-stage JS handles navigation.
-      var el = document.elementFromPoint(x, y);
-      if (!el) return;
-      var evt = new MouseEvent('click', { bubbles: true, cancelable: true, clientX: x, clientY: y });
-      // Temporarily re-allow this specific click
-      window.__mobArrowClick = true;
-      el.dispatchEvent(evt);
-      window.__mobArrowClick = false;
-    }
-
-    // We need to tell the deck-stage to go prev/next.
-    // The deck-stage advances on click in its right half and goes back on left half.
-    // So clicking left-quarter = prev, right-quarter = next.
-    prev.addEventListener('touchend', function(e) {
-      e.stopPropagation();
-      e.preventDefault();
-      var x = window.innerWidth * 0.1; // left side = prev
-      var y = window.innerHeight * 0.5;
-      clickStageAt(x, y);
-    }, true);
-
-    next.addEventListener('touchend', function(e) {
-      e.stopPropagation();
-      e.preventDefault();
-      var x = window.innerWidth * 0.9; // right side = next
-      var y = window.innerHeight * 0.5;
-      clickStageAt(x, y);
-    }, true);
-
-    document.body.appendChild(prev);
-    document.body.appendChild(next);
-  }
-
-  function removePortraitArrows() {
-    var p = document.getElementById('mob-prev');
-    var n = document.getElementById('mob-next');
-    if (p) p.remove();
-    if (n) n.remove();
-  }
-
-  // Override the block to allow arrow-button-triggered clicks through
-  document.addEventListener('click', function(e) {
-    if (window.__mobArrowClick) return; // let it through
+  // Block all touches/clicks on slide content — nav bar arrows handle navigation
+  document.addEventListener('touchstart', function(e) {
     if (e.target.closest('.viz-hotspot') || e.target.closest('.viz-overlay')) return;
-    var stage = e.target.closest('.deck-stage, [data-dc-root], x-import, section');
-    if (stage) e.stopImmediatePropagation();
-  }, true);
+    var stage = e.target.closest('section, .deck-stage, x-import, [data-dc-root]');
+    if (stage) { e.stopImmediatePropagation(); e.preventDefault(); }
+  }, { capture: true, passive: false });
 
   document.addEventListener('touchend', function(e) {
     if (e.target.closest('.viz-hotspot') || e.target.closest('.viz-overlay')) return;
-    var stage = e.target.closest('.deck-stage, [data-dc-root], x-import, section');
-    if (stage) {
-      e.stopImmediatePropagation();
-      e.preventDefault();
-    }
-  }, {capture: true, passive: false});
+    var stage = e.target.closest('section, .deck-stage, x-import, [data-dc-root]');
+    if (stage) { e.stopImmediatePropagation(); e.preventDefault(); }
+  }, { capture: true, passive: false });
 
-  function updateOrientation() {
-    if (isPortrait()) {
-      injectPortraitArrows();
-    } else {
-      removePortraitArrows();
-    }
-  }
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.viz-hotspot') || e.target.closest('.viz-overlay')) return;
+    var stage = e.target.closest('section, .deck-stage, x-import, [data-dc-root]');
+    if (stage && !window.__mobArrowClick) e.stopImmediatePropagation();
+  }, true);
 
-  window.addEventListener('orientationchange', function() {
-    setTimeout(updateOrientation, 100);
-  });
-  window.addEventListener('resize', updateOrientation);
-
-  // Init on load
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', updateOrientation);
-  } else {
-    updateOrientation();
-  }
 })();
 </script>
 </body>
