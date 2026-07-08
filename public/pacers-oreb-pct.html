@@ -252,7 +252,8 @@
       { x: m.left + boxPad, y: m.top + ph - boxPad, anchor: "start", val: QUAD_WIN.BL, valign: "bottom" },
       { x: m.left + pw - boxPad, y: m.top + ph - boxPad, anchor: "end", val: QUAD_WIN.BR, valign: "bottom" },
     ];
-    boxes.forEach(b => {
+    let trBoxRight = null, trBoxBottom = null; // used to reflow the legend below the TR box on narrow/mobile widths
+    boxes.forEach((b, bi) => {
       const lines = [b.val + "%", "Win Rate"];
       const boxW = Math.max(...lines.map(l => l.length)) * fBox * 0.62 + boxPad * 2;
       const lineH = fBox + 2;
@@ -267,6 +268,7 @@
           .attr("text-anchor", "middle").style("font-size", fBox + "px").style("font-weight", i === 0 ? 700 : 400)
           .text(line);
       });
+      if (bi === 1) { trBoxRight = bx + boxW; trBoxBottom = by + boxH; }
     });
 
     const legItems = [ { label: "Win", color: "#002D62" }, { label: "Loss", color: "#FDBB30" } ];
@@ -279,8 +281,14 @@
     legTextProbe.remove();
     const legW = legR * 2 + 8 + legLabelW + legPadX * 2;
     const legH = legRowH * legItems.length + legPadY * 2 - (legRowH - fLeg);
-    const legX = m.left + pw - legW - boxPad;
-    const legY = m.top - legH - Math.max(6, 8 * s);
+    // On narrow/mobile widths the legend (sized off the header area) can
+    // collide with the title/subtitle text above the plot. Below a width
+    // breakpoint, dock it under the top-right win-rate box instead — the
+    // desktop/wide layout (above the plot, right-aligned) is untouched.
+    const MOBILE_BREAKPOINT = 480;
+    const isCompact = W < MOBILE_BREAKPOINT;
+    const legX = isCompact ? (trBoxRight - legW) : (m.left + pw - legW - boxPad);
+    const legY = isCompact ? (trBoxBottom + Math.max(6, 8 * s)) : (m.top - legH - Math.max(6, 8 * s));
     svg.append("rect").attr("x", legX).attr("y", legY).attr("width", legW).attr("height", legH)
       .attr("fill", "#fff").attr("stroke", "#000").attr("stroke-width", 1);
     legItems.forEach((it, i) => {
