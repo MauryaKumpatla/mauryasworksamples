@@ -7,7 +7,7 @@ export default function IndianaPacersProjects() {
 
   const buttons: { label: string; href?: string; external?: boolean }[] = [
     { label: 'Assignment #1: Presentation', href: '/indianapacersprojects/presentation' },
-    { label: 'Assignment #2: Four Factors Visualizations', href: '/indianapacersprojects/four-factors' },
+    { label: 'Assignment #2: Four Factors Visualizations', href: '/indianapacersprojects/datavisualizations' },
     { label: 'Assignment #3: Mock SQL Queries', href: '/indianapacersprojects/sql-queries' },
   ];
 
