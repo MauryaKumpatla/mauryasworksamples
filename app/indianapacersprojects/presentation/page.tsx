@@ -76,7 +76,7 @@ export default function PacersPresentation() {
         color: '#222',
       }}>
 
-        <p>Though I finished the base version of this presentation a few days ago, I figured I&rsquo;d maximize my time available and create a better product. Through this, the interactive version of this presentation was born. It includes multiple hyperlinks on two slides &mdash; the De&rsquo;Anthony Melton and DaRon Holmes II slides &mdash; that amplify the research and analysis within each slide. The features and overall presentation obviously look better on a desktop, but are still optimized for mobile viewing in either portrait or landscape mode. I hope you enjoy!</p>
+        <p>Though I finished the base version of this presentation a few days ago, I figured I&rsquo;d maximize my time available and create a better product. Through this, the interactive version of this presentation was born. It includes multiple hyperlinks on two slides &mdash; the De&rsquo;Anthony Melton and DaRon Holmes II slides &mdash; that amplify the research and analysis within each slide. The features and overall presentation obviously look better on a desktop, but are still optimized for mobile viewing. I hope you enjoy!</p>
 
         <h2 style={sectionHeader}>Presentation</h2>
 
