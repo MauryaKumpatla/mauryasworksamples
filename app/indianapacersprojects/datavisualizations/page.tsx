@@ -122,8 +122,6 @@ export default function DataVisualizations() {
 
         <p>The overwhelming influence that eFG% has on winning basketball games lines up with Dean Oliver &mdash; the creator of basketball&rsquo;s four factors &mdash; and his initial research. Oliver found that shooting had a 40% contribution to wins, turnovers 25%, rebounding 20%, and free throws 15%.</p>
 
-        <div style={{ width: '60px', height: '3px', background: '#c0bdb8', margin: '5vh auto' }} />
-        <p style={{ fontSize: '0.8em', color: '#888', textAlign: 'center' }}>All rights reserved &copy; AMR Agency</p>
 
       </article>
 

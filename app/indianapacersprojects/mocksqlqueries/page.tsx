@@ -161,8 +161,6 @@ LIMIT 5;`,
           </div>
         ))}
 
-        <div style={{ width: '60px', height: '3px', background: '#c0bdb8', margin: '5vh auto' }} />
-        <p style={{ fontSize: '0.8em', color: '#888', textAlign: 'center', margin: 0 }}>All rights reserved &copy; AMR Agency</p>
       </article>
 
       <style>{`
