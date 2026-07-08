@@ -1,13 +1,11 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function PacersPresentation() {
   const titleFont = "var(--font-supria), sans-serif";
   const bodyFont = "var(--font-supria-regular), sans-serif";
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   const sectionHeader: React.CSSProperties = {
     fontFamily: titleFont,
@@ -18,27 +16,14 @@ export default function PacersPresentation() {
     textAlign: 'center',
   };
 
-  const enterFullscreen = () => {
-    const el = containerRef.current;
-    if (!el) return;
-    if (el.requestFullscreen) {
-      el.requestFullscreen().then(() => setIsFullscreen(true)).catch(() => setIsFullscreen(true));
-    } else {
-      setIsFullscreen(true);
-    }
-  };
+  const enterFullscreen = () => setIsFullscreen(true);
+  const exitFullscreen = () => setIsFullscreen(false);
 
-  const exitFullscreen = () => {
-    if (document.fullscreenElement) {
-      document.exitFullscreen().then(() => setIsFullscreen(false)).catch(() => setIsFullscreen(false));
-    } else {
-      setIsFullscreen(false);
-    }
-  };
-
-  const handleFullscreenChange = () => {
-    if (!document.fullscreenElement) setIsFullscreen(false);
-  };
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setIsFullscreen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   return (
     <main style={{
@@ -90,19 +75,21 @@ export default function PacersPresentation() {
                 inset: 0,
                 background: '#000',
                 zIndex: 1000,
-                display: 'flex',
-                flexDirection: 'column',
               }}
-              onFullscreenChange={handleFullscreenChange as any}
             >
+              <iframe
+                src="/pacers-presentation.html"
+                title="Pacers Player Targets Deck"
+                style={{ width: '100%', height: '100%', border: 'none', display: 'block' }}
+              />
               <button
                 onClick={exitFullscreen}
                 style={{
                   position: 'absolute',
                   top: '16px',
                   right: '20px',
-                  background: 'rgba(255,255,255,0.1)',
-                  border: '1px solid rgba(255,255,255,0.25)',
+                  background: 'rgba(255,255,255,0.15)',
+                  border: '1px solid rgba(255,255,255,0.35)',
                   color: '#fff',
                   fontFamily: titleFont,
                   fontSize: '13px',
@@ -111,25 +98,20 @@ export default function PacersPresentation() {
                   borderRadius: '4px',
                   cursor: 'pointer',
                   backdropFilter: 'blur(6px)',
-                  zIndex: 1001,
+                  zIndex: 1002,
                   transition: 'background 0.15s ease',
+                  pointerEvents: 'all',
                 }}
-                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.2)')}
-                onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.1)')}
+                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.28)')}
+                onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.15)')}
               >
                 ESC / EXIT
               </button>
-              <iframe
-                src="/pacers-presentation.html"
-                title="Pacers Player Targets Deck"
-                style={{ width: '100%', height: '100%', border: 'none' }}
-                allowFullScreen
-              />
             </div>
           )}
 
           {/* Normal embed with fullscreen button */}
-          <div ref={containerRef} style={{ lineHeight: 0 }}>
+          <div style={{ lineHeight: 0 }}>
             <iframe
               ref={iframeRef}
               src="/pacers-presentation.html"
