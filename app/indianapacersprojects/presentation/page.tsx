@@ -129,7 +129,7 @@ export default function PacersPresentation() {
           )}
 
           {/* Normal embed with fullscreen button */}
-          <div ref={containerRef} style={{ position: 'relative', lineHeight: 0 }}>
+          <div ref={containerRef} style={{ lineHeight: 0 }}>
             <iframe
               ref={iframeRef}
               src="/pacers-presentation.html"
@@ -138,27 +138,25 @@ export default function PacersPresentation() {
               loading="lazy"
               allowFullScreen
             />
+          </div>
+          <div style={{ textAlign: 'right', marginTop: '10px' }}>
             <button
               onClick={enterFullscreen}
               title="Enter fullscreen"
               style={{
-                position: 'absolute',
-                bottom: '12px',
-                right: '12px',
-                background: 'rgba(0,0,0,0.55)',
-                border: '1px solid rgba(255,255,255,0.25)',
-                color: '#fff',
+                background: 'rgba(22,22,22,0.08)',
+                border: '1.5px solid rgba(22,22,22,0.22)',
+                color: '#161616',
                 fontFamily: titleFont,
                 fontSize: '12px',
                 letterSpacing: '0.08em',
                 padding: '6px 14px',
                 borderRadius: '4px',
                 cursor: 'pointer',
-                backdropFilter: 'blur(4px)',
                 transition: 'background 0.15s ease',
               }}
-              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.75)')}
-              onMouseLeave={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.55)')}
+              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(22,22,22,0.15)')}
+              onMouseLeave={e => (e.currentTarget.style.background = 'rgba(22,22,22,0.08)')}
             >
               ⛶ FULL SCREEN
             </button>
