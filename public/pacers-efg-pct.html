@@ -3,10 +3,6 @@
      dotted reference lines at AST=15 / PPP=1.2). Interaction: hover (desktop) /
      tap (mobile) a dot to show a name box. -->
 <meta charset="utf-8">
-<style>/* compact-fix */
-html, body { height: auto !important; min-height: unset !important; overflow: hidden !important; }
-body { min-height: unset !important; align-items: flex-start !important; }
-</style>
 <style>
   @font-face {
     font-family: "LatoEmbed";
@@ -30,7 +26,6 @@ body { min-height: unset !important; align-items: flex-start !important; }
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
     box-sizing: border-box;
   }
 
@@ -203,8 +198,8 @@ body { min-height: unset !important; align-items: flex-start !important; }
       left: plotCenterX - pw / 2
     };
     let H, ph;
-    ph = pw;
-    H = m.top + ph + m.bottom;
+    H = W;
+    ph = H - m.top - m.bottom;
     svg.attr("viewBox", `${-SHIFT} 0 ${W} ${H}`);
 
     const x = d3.scaleLinear().domain(X_DOMAIN).range([m.left, m.left + pw]);
