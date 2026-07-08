@@ -88,22 +88,22 @@ export default function PacersPresentation() {
                   position: 'absolute',
                   top: '16px',
                   right: '20px',
-                  background: 'rgba(255,255,255,0.15)',
-                  border: '1px solid rgba(255,255,255,0.35)',
-                  color: '#fff',
+                  background: '#161616',
+                  border: '1.5px solid rgba(255,255,255,0.5)',
+                  color: '#ffffff',
                   fontFamily: titleFont,
                   fontSize: '13px',
                   letterSpacing: '0.08em',
-                  padding: '7px 18px',
+                  padding: '8px 20px',
                   borderRadius: '4px',
                   cursor: 'pointer',
-                  backdropFilter: 'blur(6px)',
                   zIndex: 1002,
                   transition: 'background 0.15s ease',
                   pointerEvents: 'all',
+                  boxShadow: '0 2px 12px rgba(0,0,0,0.5)',
                 }}
-                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.28)')}
-                onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.15)')}
+                onMouseEnter={e => (e.currentTarget.style.background = '#333')}
+                onMouseLeave={e => (e.currentTarget.style.background = '#161616')}
               >
                 ESC / EXIT
               </button>
