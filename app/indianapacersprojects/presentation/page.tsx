@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function PacersPresentation() {
   const titleFont = "var(--font-supria), sans-serif";
   const bodyFont = "var(--font-supria-regular), sans-serif";
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const sectionHeader: React.CSSProperties = {
     fontFamily: titleFont,
@@ -67,7 +68,7 @@ export default function PacersPresentation() {
 
         {/* ── Presentation embed with fullscreen controls ── */}
         <div style={{ margin: '0 auto 1.6em', maxWidth: '1100px' }}>
-          {/* Fullscreen overlay */}
+          {/* Fullscreen overlay — iframe fills screen */}
           {isFullscreen && (
             <div
               style={{
@@ -82,32 +83,35 @@ export default function PacersPresentation() {
                 title="Pacers Player Targets Deck"
                 style={{ width: '100%', height: '100%', border: 'none', display: 'block' }}
               />
-              <button
-                onClick={exitFullscreen}
-                style={{
-                  position: 'absolute',
-                  top: '16px',
-                  right: '20px',
-                  background: '#161616',
-                  border: '1.5px solid rgba(255,255,255,0.5)',
-                  color: '#ffffff',
-                  fontFamily: titleFont,
-                  fontSize: '13px',
-                  letterSpacing: '0.08em',
-                  padding: '8px 20px',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                  zIndex: 1002,
-                  transition: 'background 0.15s ease',
-                  pointerEvents: 'all',
-                  boxShadow: '0 2px 12px rgba(0,0,0,0.5)',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.background = '#333')}
-                onMouseLeave={e => (e.currentTarget.style.background = '#161616')}
-              >
-                ESC / EXIT
-              </button>
             </div>
+          )}
+
+          {/* ESC button rendered outside iframe container so it's never covered */}
+          {isFullscreen && (
+            <button
+              onClick={exitFullscreen}
+              style={{
+                position: 'fixed',
+                top: '16px',
+                right: '20px',
+                background: '#161616',
+                border: '1.5px solid rgba(255,255,255,0.5)',
+                color: '#ffffff',
+                fontFamily: titleFont,
+                fontSize: '13px',
+                letterSpacing: '0.08em',
+                padding: '8px 20px',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                zIndex: 2000,
+                transition: 'background 0.15s ease',
+                boxShadow: '0 2px 12px rgba(0,0,0,0.6)',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.background = '#333')}
+              onMouseLeave={e => (e.currentTarget.style.background = '#161616')}
+            >
+              ESC / EXIT
+            </button>
           )}
 
           {/* Normal embed with fullscreen button */}
