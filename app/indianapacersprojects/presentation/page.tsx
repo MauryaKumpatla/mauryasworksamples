@@ -1,8 +1,13 @@
 'use client';
 
+import { useState, useRef } from 'react';
+
 export default function PacersPresentation() {
   const titleFont = "var(--font-supria), sans-serif";
   const bodyFont = "var(--font-supria-regular), sans-serif";
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const sectionHeader: React.CSSProperties = {
     fontFamily: titleFont,
@@ -11,6 +16,28 @@ export default function PacersPresentation() {
     margin: '4vh 0 2vh',
     letterSpacing: '-0.01em',
     textAlign: 'center',
+  };
+
+  const enterFullscreen = () => {
+    const el = containerRef.current;
+    if (!el) return;
+    if (el.requestFullscreen) {
+      el.requestFullscreen().then(() => setIsFullscreen(true)).catch(() => setIsFullscreen(true));
+    } else {
+      setIsFullscreen(true);
+    }
+  };
+
+  const exitFullscreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen().then(() => setIsFullscreen(false)).catch(() => setIsFullscreen(false));
+    } else {
+      setIsFullscreen(false);
+    }
+  };
+
+  const handleFullscreenChange = () => {
+    if (!document.fullscreenElement) setIsFullscreen(false);
   };
 
   return (
@@ -53,14 +80,89 @@ export default function PacersPresentation() {
 
         <h2 style={sectionHeader}>Presentation</h2>
 
-        <div style={{ margin: '0 auto 1.6em', maxWidth: '1100px', lineHeight: 0 }}>
-          <iframe
-            src="/pacers-presentation.html"
-            title="Pacers Player Targets Deck"
-            style={{ width: '100%', aspectRatio: '16 / 9', display: 'block', border: 'none', background: 'transparent' }}
-            loading="lazy"
-            allowFullScreen
-          />
+        {/* ── Presentation embed with fullscreen controls ── */}
+        <div style={{ margin: '0 auto 1.6em', maxWidth: '1100px' }}>
+          {/* Fullscreen overlay */}
+          {isFullscreen && (
+            <div
+              style={{
+                position: 'fixed',
+                inset: 0,
+                background: '#000',
+                zIndex: 1000,
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+              onFullscreenChange={handleFullscreenChange as any}
+            >
+              <button
+                onClick={exitFullscreen}
+                style={{
+                  position: 'absolute',
+                  top: '16px',
+                  right: '20px',
+                  background: 'rgba(255,255,255,0.1)',
+                  border: '1px solid rgba(255,255,255,0.25)',
+                  color: '#fff',
+                  fontFamily: titleFont,
+                  fontSize: '13px',
+                  letterSpacing: '0.08em',
+                  padding: '7px 18px',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  backdropFilter: 'blur(6px)',
+                  zIndex: 1001,
+                  transition: 'background 0.15s ease',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.2)')}
+                onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.1)')}
+              >
+                ESC / EXIT
+              </button>
+              <iframe
+                src="/pacers-presentation.html"
+                title="Pacers Player Targets Deck"
+                style={{ width: '100%', height: '100%', border: 'none' }}
+                allowFullScreen
+              />
+            </div>
+          )}
+
+          {/* Normal embed with fullscreen button */}
+          <div ref={containerRef} style={{ position: 'relative', lineHeight: 0 }}>
+            <iframe
+              ref={iframeRef}
+              src="/pacers-presentation.html"
+              title="Pacers Player Targets Deck"
+              style={{ width: '100%', aspectRatio: '16 / 9', display: 'block', border: 'none', background: 'transparent' }}
+              loading="lazy"
+              allowFullScreen
+            />
+            <button
+              onClick={enterFullscreen}
+              title="Enter fullscreen"
+              style={{
+                position: 'absolute',
+                bottom: '12px',
+                right: '12px',
+                background: 'rgba(0,0,0,0.55)',
+                border: '1px solid rgba(255,255,255,0.25)',
+                color: '#fff',
+                fontFamily: titleFont,
+                fontSize: '12px',
+                letterSpacing: '0.08em',
+                padding: '6px 14px',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                backdropFilter: 'blur(4px)',
+                transition: 'background 0.15s ease',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.75)')}
+              onMouseLeave={e => (e.currentTarget.style.background = 'rgba(0,0,0,0.55)')}
+            >
+              ⛶ FULL SCREEN
+            </button>
+          </div>
         </div>
 
         <div style={{ width: '60px', height: '3px', background: '#c0bdb8', margin: '5vh auto' }} />
@@ -71,6 +173,14 @@ export default function PacersPresentation() {
       <style>{`
         p { margin: 0 0 1.6em 0; }
         strong { font-family: var(--font-supria), sans-serif; font-weight: 700; }
+        @media (max-width: 768px) {
+          button[title="Enter fullscreen"] {
+            bottom: 8px;
+            right: 8px;
+            font-size: 11px;
+            padding: 5px 11px;
+          }
+        }
       `}</style>
     </main>
   );
