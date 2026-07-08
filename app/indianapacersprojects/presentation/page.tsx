@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 
 export default function PacersPresentation() {
   const titleFont = "var(--font-supria), sans-serif";
@@ -34,8 +35,29 @@ export default function PacersPresentation() {
       backgroundSize: '300px',
       color: '#161616',
     }}>
+      {/* ── Back button ── */}
+      <div style={{ padding: '4vh 6vw 0' }}>
+        <Link
+          href="/indianapacersprojects"
+          style={{
+            fontFamily: titleFont,
+            fontWeight: 700,
+            fontSize: '13px',
+            letterSpacing: '0.06em',
+            color: '#161616',
+            textDecoration: 'none',
+            opacity: 0.5,
+            display: 'inline-block',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
+          onMouseLeave={e => (e.currentTarget.style.opacity = '0.5')}
+        >
+          ← BACK
+        </Link>
+      </div>
+
       {/* ── Title ── */}
-      <div style={{ padding: '8vh 6vw 2vh', textAlign: 'center' }}>
+      <div style={{ padding: '4vh 6vw 2vh', textAlign: 'center' }}>
         <h1 style={{
           fontFamily: titleFont,
           fontWeight: 700,
